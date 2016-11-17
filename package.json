@@ -1,0 +1,22 @@
+{
+  "name": "vanillapress-0.1",
+  "version": "0.1.0",
+  "description": "WordPress with a JavaScript frontend using the WP REST API.",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "prod": "webpack -p"
+  },
+  "author": "Joe Dooley <hello@developingdesigns.com> (https://www.developingdesigns.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "html-webpack-plugin": "^2.24.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
