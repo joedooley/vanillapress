@@ -1,19 +1,18 @@
-import jsonData from './data'
+/**
+ * Main app file.  Initializes app components.
+ */
+import model from './model'
+import view from './view'
 
 /**
  * The main app object.
  *
  */
 const vanillaPress = {
-
-  init () {
-
-    // Add any functions here you want
-    // to run to start the application
-    console.log( jsonData );
-
-  }
-
+    run () {
+        model.init();
+        view.init();
+    }
 };
 
-export default vanillaPress.init()
+export default vanillaPress.run()
