@@ -12,7 +12,6 @@ const model = {};
 
 model.init = function() {
     model.updateLocalStore(jsonData);
-    console.log(model.getPosts());
 };
 
 
