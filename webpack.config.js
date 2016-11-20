@@ -1,5 +1,6 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
+let BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     template: __dirname + '/app/index.html',
     filename: 'index.html',
     inject: 'body'
@@ -16,7 +17,11 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}        ]
+            {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+            ]
     },
-    plugins: [HTMLWebpackPluginConfig]
+    plugins: [
+        HTMLWebpackPluginConfig,
+        new BellOnBundlerErrorPlugin()
+    ]
 };

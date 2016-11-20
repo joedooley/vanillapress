@@ -16,7 +16,7 @@ const view = {};
  * Calls initial View methods
  */
 view.init = function() {
-    view.loadBlogPosts();
+
 };
 
 
@@ -63,6 +63,18 @@ view.createPostMarkup = function (post) {
 
     return articleEl;
 
+};
+
+
+/**
+ * Clears title and main content from page
+ */
+view.clearContent = function () {
+    const titleEL = helpers.getPageTitleEl();
+    const contentEl = helpers.getPageContentEl();
+
+    titleEL.innerHTML = '';
+    contentEl.innerHTML = '';
 };
 
 export default view
