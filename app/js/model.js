@@ -26,6 +26,18 @@ model.getPosts = function() {
 
 
 /**
+ * Gets post from local store
+ *
+ * @param slug string
+ * @return post {object} || null
+ */
+model.getPost = function(slug) {
+    const posts = model.getLocalStore();
+    return posts.find(post => post.slug === slug);
+};
+
+
+/**
  * Gets content from local store
  *
  * @return store {object} Native JavaScript object from local store

@@ -35,7 +35,7 @@ router.getSlug = function () {
  *
  */
 router.listenPageChange = function () {
-    window.addEventListener('hashChange', router.loadContent);
+    window.addEventListener('hashchange', router.loadContent);
 };
 
 
@@ -44,12 +44,12 @@ router.listenPageChange = function () {
  */
 router.loadContent = function () {
     const slug = router.getSlug();
+    view.clearContent();
 
     if (null === slug) {
         view.loadBlogPosts();
     } else {
-        console.log('Page: ' + slug);
-        view.clearContent();
+        view.loadBlogPost(slug);
     }
 };
 

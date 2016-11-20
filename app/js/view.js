@@ -16,7 +16,6 @@ const view = {};
  * Calls initial View methods
  */
 view.init = function() {
-
 };
 
 
@@ -34,6 +33,21 @@ view.loadBlogPosts = function() {
     }
 
     primaryContentEl.appendChild(postsMarkup);
+};
+
+
+/**
+ * Get blog post and append to the page
+ *
+ * @param slug string
+ */
+view.loadBlogPost = function (slug) {
+    const post = model.getPost(slug);
+    const titleEL = helpers.getPageTitleEl();
+    const contentEl = helpers.getPageContentEl();
+
+    titleEL.innerHTML = post.title;
+    contentEl.innerHTML = post.content;
 };
 
 
