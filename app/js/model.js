@@ -1,7 +1,7 @@
 /**
  * Model file for working with data
  */
-import jsonData from './data'
+import { data } from './data'
 
 /**
  * Main Model Object
@@ -11,29 +11,39 @@ const model = {};
 
 
 model.init = function() {
-    model.updateLocalStore(jsonData);
+    model.updateLocalStore(data);
 };
 
 
 /**
  * Gets posts from local store
  *
- * @return store {object} Object of posts
+ * @return store {array} Object of posts
  */
 model.getPosts = function() {
-    return model.getLocalStore();
+    return model.getLocalStore().posts;
 };
 
 
 /**
- * Gets post from local store
+ * Gets pages from local store
  *
- * @param slug string
- * @return post {object} || null
+ * @return store {array} Object of posts
  */
-model.getPost = function(slug) {
-    const posts = model.getLocalStore();
-    return posts.find(post => post.slug === slug);
+model.getPages = function() {
+    return model.getLocalStore().pages;
+};
+
+
+/**
+ * Gets content type from local store
+ *
+ * @param slug
+ * @return store {object} Object of posts
+ */
+model.getSingle = function(slug) {
+    const postTypes = model.getPosts().concat(model.getPages());
+    return postTypes.find(postType => postType.slug === slug);
 };
 
 
@@ -53,7 +63,7 @@ model.getLocalStore = function() {
  * @param store {object} Native JavaScript object with site data
  */
 model.updateLocalStore = function( store ) {
-    localStorage.setItem( 'vanillaPress', store );
+    localStorage.setItem( 'vanillaPress', JSON.stringify(store) );
 };
 
 

@@ -46,10 +46,18 @@ router.loadContent = function () {
     const slug = router.getSlug();
     view.clearContent();
 
-    if (null === slug) {
+    // if (null === slug) {
+    //     view.loadBlogPosts();
+    // } else {
+    //     view.loadSingle(slug);
+    // }
+    if ('blog' === slug) {
         view.loadBlogPosts();
+    } else if (null === slug) {
+        view.loadSingle('home');
     } else {
-        view.loadBlogPost(slug);
+        view.loadSingle(slug);
+
     }
 };
 

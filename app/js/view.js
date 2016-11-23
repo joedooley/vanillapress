@@ -16,6 +16,7 @@ const view = {};
  * Calls initial View methods
  */
 view.init = function() {
+    view.loadMainMenu();
 };
 
 
@@ -37,17 +38,40 @@ view.loadBlogPosts = function() {
 
 
 /**
- * Get blog post and append to the page
+ * Loads Main Menu from pages
  *
  * @param slug string
  */
-view.loadBlogPost = function (slug) {
-    const post = model.getPost(slug);
+view.loadSingle = function (slug) {
+    let postType = model.getSingle(slug);
     const titleEL = helpers.getPageTitleEl();
     const contentEl = helpers.getPageContentEl();
 
-    titleEL.innerHTML = post.title;
-    contentEl.innerHTML = post.content;
+    if (undefined === postType) {
+        postType = {
+            title: 'Page not found',
+            content: `You must be lost. <a href='#'>Click here</a> to go back to the site.`
+        };
+    }
+
+    titleEL.innerHTML = postType.title;
+    contentEl.innerHTML = postType.content;
+};
+
+
+/**
+ * Load primary navigation
+ */
+view.loadMainMenu = function () {
+    const pages = model.getPages();
+    const mainMenuEl = helpers.getNavEl();
+    const mainMenuMarkup = document.createDocumentFragment();
+
+    for (let i = 0; i < pages.length; i++) {
+        mainMenuMarkup.appendChild(helpers.createMenuItem(pages[i]));
+    }
+
+    mainMenuEl.appendChild(mainMenuMarkup);
 };
 
 
