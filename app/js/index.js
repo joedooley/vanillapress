@@ -4,6 +4,7 @@
 import model from './model'
 import router from './router'
 import view from './view'
+import editor from './editor'
 
 /**
  * The main app object.
@@ -14,6 +15,7 @@ const vanillaPress = {
         model.init();
         router.init();
         view.init();
+        editor.init();
     }
 };
 

@@ -10,6 +10,13 @@ const helpers = {};
 
 
 /**
+ * Get element by id
+ */
+helpers.getEditorEls = function (element) {
+    return document.getElementById(element);
+};
+
+/**
  * Get page title
  */
 helpers.getPageTitleEl = function() {
@@ -56,5 +63,14 @@ helpers.createLink = function (contentObj) {
     return linkEl;
 
 };
+
+
+/**
+ * Toggle css class
+ */
+helpers.toggleClass = function (element, cssClass) {
+    element.classList.toggle(cssClass);
+};
+
 
 export default helpers
