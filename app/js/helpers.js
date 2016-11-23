@@ -12,23 +12,8 @@ const helpers = {};
 /**
  * Get element by id
  */
-helpers.getEditorEls = function (element) {
+helpers.getElement = function (element) {
     return document.getElementById(element);
-};
-
-/**
- * Get page title
- */
-helpers.getPageTitleEl = function() {
-    return document.getElementById('pageTitle');
-};
-
-
-/**
- * Get page content
- */
-helpers.getPageContentEl = function() {
-    return document.getElementById('pageContent');
 };
 
 
@@ -37,6 +22,14 @@ helpers.getPageContentEl = function() {
  */
 helpers.getNavEl = function() {
     return document.querySelector('#mainNav ul');
+};
+
+
+/**
+ * Toggle css class
+ */
+helpers.toggleClass = function (element, cssClass) {
+    element.classList.toggle(cssClass);
 };
 
 
@@ -62,14 +55,6 @@ helpers.createLink = function (contentObj) {
 
     return linkEl;
 
-};
-
-
-/**
- * Toggle css class
- */
-helpers.toggleClass = function (element, cssClass) {
-    element.classList.toggle(cssClass);
 };
 
 

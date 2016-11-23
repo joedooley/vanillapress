@@ -2,6 +2,7 @@
  * Model file for working with data
  */
 import { data } from './data'
+import router from './router'
 
 /**
  * Main Model Object
@@ -36,7 +37,7 @@ model.getPages = function() {
 
 
 /**
- * Gets content type from local store
+ * Gets single post or page from local store
  *
  * @param slug
  * @return store {object} Object of posts
@@ -44,6 +45,15 @@ model.getPages = function() {
 model.getSingle = function(slug) {
     const postTypes = model.getPosts().concat(model.getPages());
     return postTypes.find(postType => postType.slug === slug);
+};
+
+
+/**
+ * Get a single post or page based on the url
+ */
+model.getCurrentContent = function () {
+    const slug = router.getSlug();
+    return model.getSingle(slug);
 };
 
 

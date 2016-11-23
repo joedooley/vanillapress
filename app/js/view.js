@@ -26,7 +26,7 @@ view.init = function() {
 view.loadBlogPosts = function() {
     let posts = model.getPosts();
     let postsMarkup = document.createDocumentFragment();
-    let primaryContentEl = helpers.getPageContentEl();
+    let primaryContentEl = helpers.getElement('pageContent');
 
 
     for ( let i = 0, max = posts.length; i < max; i++) {
@@ -44,8 +44,8 @@ view.loadBlogPosts = function() {
  */
 view.loadSingle = function (slug) {
     let postType = model.getSingle(slug);
-    const titleEL = helpers.getPageTitleEl();
-    const contentEl = helpers.getPageContentEl();
+    const titleEL = helpers.getElement('pageTitle');
+    const contentEl = helpers.getElement('pageContent');
 
     if (undefined === postType) {
         postType = {
@@ -108,8 +108,8 @@ view.createPostMarkup = function (post) {
  * Clears title and main content from page
  */
 view.clearContent = function () {
-    const titleEL = helpers.getPageTitleEl();
-    const contentEl = helpers.getPageContentEl();
+    const titleEL = helpers.getElement('pageTitle');
+    const contentEl = helpers.getElement('pageContent');
 
     titleEL.innerHTML = '';
     contentEl.innerHTML = '';
