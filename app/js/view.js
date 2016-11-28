@@ -3,6 +3,7 @@
  */
 import model from './model'
 import helpers from './helpers'
+import editor from './editor'
 
 
 /**
@@ -114,5 +115,31 @@ view.clearContent = function () {
     titleEL.innerHTML = '';
     contentEl.innerHTML = '';
 };
+
+
+/**
+ * Updates title in real time when content changes
+ */
+view.updateTitleFromForm = function () {
+    const titleInputEl = helpers.getElement('editTitle').value;
+    const titleEL = helpers.getElement('pageTitle');
+
+    titleEL.innerHTML = titleInputEl;
+    editor.currentContent.title = titleEL;
+    // console.log('view.updateTitleFromForm: ', editor.currentContent)
+};
+
+
+/**
+ *  Updates title in real time when content changes
+ */
+view.updateContentFromForm = function () {
+    const contentInputEl = helpers.getElement('editContent').value;
+    const contentEl = helpers.getElement('pageContent');
+
+    contentEl.innerHTML = contentInputEl;
+    editor.currentContent.content = contentEl;
+};
+
 
 export default view

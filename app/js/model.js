@@ -58,6 +58,39 @@ model.getCurrentContent = function () {
 
 
 /**
+ * Updates post or page in local store
+ *
+ * @param {object} contentObj
+ */
+model.updateContent = function (contentObj) {
+    let store = model.getLocalStore();
+    let date = new Date();
+
+    if ('post' === contentObj.type) {
+        store.posts.forEach(function (post) {
+            if (contentObj.id === post.id) {
+                post.title = contentObj.title;
+                post.content = contentObj.content;
+                post.modified = date.toISOString();
+            }
+        });
+    }
+
+    if ('page' === contentObj.type) {
+        store.pages.forEach(function (page) {
+            if (contentObj.id === page.id) {
+                page.title = contentObj.title;
+                page.content = contentObj.content;
+                page.modified = date.toISOString();
+            }
+        });
+    }
+
+    model.updateLocalStore(store);
+};
+
+
+/**
  * Gets content from local store
  *
  * @return store {object} Native JavaScript object from local store
