@@ -1,60 +1,62 @@
 /**
  * Router file for managing url changes
  */
-import view from './view'
-
-/**
- * The main router object.
- *
- */
-const router = {};
-
+import { clearContent, loadBlogPosts, loadSingleContent } from './view'
+import { editor, loadEditForm } from './editor'
+import { getContent } from './model'
+import { _getElement } from './helpers'
 
 /**
  * Initializes the router
  *
  */
-router.init = function () {
-    router.loadContent();
-    router.listenPageChange();
-};
-
-
-/**
- * Gets the slug from the URL
- *
- */
-router.getSlug = function () {
-    const slug = window.location.hash.substring(1);
-    return '' === slug ? null : slug;
-};
+export function init () {
+	loadContent()
+	listenPageChange()
+}
 
 
 /**
  * Listener function for URL changes
  *
  */
-router.listenPageChange = function () {
-    window.addEventListener('hashchange', router.loadContent);
-};
+function listenPageChange () {
+	window.addEventListener('hashchange', loadContent)
+}
+
+
+/**
+ * Gets the slug from the URL
+ *
+ */
+export function getSlug () {
+	const slug = window.location.hash.substring(1)
+	return '' === slug ? null : slug
+}
+
 
 
 /**
  * Determines what view to load based on the slug
  */
-router.loadContent = function () {
-    const slug = router.getSlug();
-    view.clearContent();
+function loadContent () {
+	const slug = getSlug()
+	const contentObj = getContent(slug)
+	const editorEl = _getElement('#editor')
 
-    if ('blog' === slug) {
-        view.loadBlogPosts();
-    } else if (null === slug) {
-        view.loadSingle('home');
-    } else {
-        view.loadSingle(slug);
+	clearContent()
 
-    }
-};
+	if (null === slug) {
+		loadSingleContent('home')
+	} else if ('blog' === slug) {
+		loadBlogPosts()
+	} else {
+		loadSingleContent(slug)
+	}
 
+	editor.currentContent = contentObj
 
-export default router
+	if (false === editorEl.classList.contains('hidden')) {
+		loadEditForm(editor.currentContent)
+	}
+}

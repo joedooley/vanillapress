@@ -1,41 +1,35 @@
 /**
  * View file for displaying content
  */
-import model from './model'
-import helpers from './helpers'
-import editor from './editor'
-
-
-/**
- * Main view object
- *
- */
-const view = {};
+import { getPosts, getContent, getPages } from './model'
+import { _getElement, _createMenuItem } from './helpers'
 
 
 /**
  * Calls initial View methods
  */
-view.init = function() {
-    view.loadMainMenu();
-};
+export function init() {
+	loadMainMenu()
+}
 
 
 /**
  * Gets blog posts and appends them to the page.
  */
-view.loadBlogPosts = function() {
-    let posts = model.getPosts();
-    let postsMarkup = document.createDocumentFragment();
-    let primaryContentEl = helpers.getElement('pageContent');
+export function loadBlogPosts() {
+	let posts = getPosts()
+	let postsMarkup = document.createDocumentFragment()
+	let titleEl = _getElement('#pageTitle')
+	let contentEl = _getElement('#pageContent')
 
 
-    for ( let i = 0, max = posts.length; i < max; i++) {
-        postsMarkup.appendChild(view.createPostMarkup(posts[i]));
-    }
+	for ( let i = 0, max = posts.length; i < max; i++) {
+		postsMarkup.appendChild(createPostMarkup(posts[i]))
+	}
 
-    primaryContentEl.appendChild(postsMarkup);
-};
+	titleEl.innerHTML = 'Blog Posts'
+	contentEl.appendChild(postsMarkup)
+}
 
 
 /**
@@ -43,37 +37,73 @@ view.loadBlogPosts = function() {
  *
  * @param slug string
  */
-view.loadSingle = function (slug) {
-    let postType = model.getSingle(slug);
-    const titleEL = helpers.getElement('pageTitle');
-    const contentEl = helpers.getElement('pageContent');
+export function loadSingleContent (slug) {
+	let contentObj = getContent(slug)
+	const titleEL = _getElement('#pageTitle')
+	const contentEl = _getElement('#pageContent')
 
-    if (undefined === postType) {
-        postType = {
-            title: 'Page not found',
-            content: `You must be lost. <a href='#'>Click here</a> to go back to the site.`
-        };
-    }
+	titleEL.innerHTML = contentObj.title
+	contentEl.innerHTML = contentObj.content
+}
 
-    titleEL.innerHTML = postType.title;
-    contentEl.innerHTML = postType.content;
-};
+
+/**
+ * Updates title in real time when content changes
+ */
+export function updateTitleAndContent (contentObj) {
+	updateTitle(contentObj.title)
+	updateContent(contentObj.content)
+}
+
+
+/**
+ * Updates title in real time when content changes
+ *
+ * @param title string
+ */
+export function updateTitle (title) {
+	let titleEl = _getElement('#pageTitle')
+	titleEl.innerHTML = title
+}
+
+
+/**
+ *  Updates content in real time when content changes
+ *
+ * @param content string
+ */
+export function updateContent (content) {
+	let contentEl = _getElement('#pageContent')
+	contentEl.innerHTML = content
+}
+
+
+/**
+ * Clears title and main content from page
+ */
+export function clearContent () {
+	const titleEL = _getElement('#pageTitle')
+	const contentEl = _getElement('#pageContent')
+
+	titleEL.innerHTML = ''
+	contentEl.innerHTML = ''
+}
 
 
 /**
  * Load primary navigation
  */
-view.loadMainMenu = function () {
-    const pages = model.getPages();
-    const mainMenuEl = helpers.getNavEl();
-    const mainMenuMarkup = document.createDocumentFragment();
+function loadMainMenu () {
+	const pages = getPages()
+	const mainMenuEl = _getElement('#mainNav ul')
+	const mainMenuMarkup = document.createDocumentFragment()
 
-    for (let i = 0; i < pages.length; i++) {
-        mainMenuMarkup.appendChild(helpers.createMenuItem(pages[i]));
-    }
+	for (let i = 0; i < pages.length; i++) {
+		mainMenuMarkup.appendChild(_createMenuItem(pages[i]))
+	}
 
-    mainMenuEl.appendChild(mainMenuMarkup);
-};
+	mainMenuEl.appendChild(mainMenuMarkup)
+}
 
 
 /**
@@ -83,63 +113,23 @@ view.loadMainMenu = function () {
  * @param post
  */
 
-view.createPostMarkup = function (post) {
+function createPostMarkup (post) {
 
-    const articleEl = document.createElement('article'),
-        titleEl = document.createElement('h3'),
-        titleLink = document.createElement('a'),
-        titleText = document.createTextNode(post.title),
-        contentEl = document.createElement('div');
+	const articleEl = document.createElement('article'),
+		titleEl = document.createElement('h3'),
+		titleLink = document.createElement('a'),
+		titleText = document.createTextNode(post.title),
+		contentEl = document.createElement('div')
 
-    titleLink.appendChild(titleText);
-    titleLink.href = '#' + post.slug;
-    titleEl.appendChild(titleLink);
+	titleLink.appendChild(titleText)
+	titleLink.href = '#' + post.slug
+	titleEl.appendChild(titleLink)
 
-    contentEl.appendChild(document.createTextNode(post.content));
+	contentEl.appendChild(document.createTextNode(post.content))
 
-    articleEl.appendChild(titleEl);
-    articleEl.appendChild(contentEl);
+	articleEl.appendChild(titleEl)
+	articleEl.appendChild(contentEl)
 
-    return articleEl;
+	return articleEl
 
-};
-
-
-/**
- * Clears title and main content from page
- */
-view.clearContent = function () {
-    const titleEL = helpers.getElement('pageTitle');
-    const contentEl = helpers.getElement('pageContent');
-
-    titleEL.innerHTML = '';
-    contentEl.innerHTML = '';
-};
-
-
-/**
- * Updates title in real time when content changes
- */
-view.updateTitleFromForm = function () {
-    const titleInputEl = helpers.getElement('editTitle').value;
-    const titleEL = helpers.getElement('pageTitle');
-
-    titleEL.innerHTML = titleInputEl;
-    editor.currentContent.title = titleEL;
-    // console.log('view.updateTitleFromForm: ', editor.currentContent)
-};
-
-
-/**
- *  Updates title in real time when content changes
- */
-view.updateContentFromForm = function () {
-    const contentInputEl = helpers.getElement('editContent').value;
-    const contentEl = helpers.getElement('pageContent');
-
-    contentEl.innerHTML = contentInputEl;
-    editor.currentContent.content = contentEl;
-};
-
-
-export default view
+}

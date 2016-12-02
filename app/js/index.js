@@ -1,23 +1,21 @@
 /**
  * Main app file.  Initializes app components.
  */
-import model from './model'
-import router from './router'
-import view from './view'
-import editor from './editor'
+import { init as modelInit } from './model'
+import { init as editorInit } from './editor'
+import { init as routerInit } from './router'
+import { init as viewInit } from './view'
 
 /**
  * The main app object.
  *
  */
-const vanillaPress = {
-    run () {
-        model.init();
-        router.init();
-        view.init();
-        editor.init();
-    }
-};
+function vanillaPress () {
+	modelInit()
+	routerInit()
+	viewInit()
+	editorInit()
+}
 
 
-export default vanillaPress.run()
+vanillaPress()

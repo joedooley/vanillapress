@@ -2,60 +2,64 @@
  * Helper file for extra helper functions
  */
 
-/**
- * Main Model Object
- *
- */
-const helpers = {};
-
-
-/**
- * Get element by id
- */
-helpers.getElement = function (element) {
-    return document.getElementById(element);
-};
-
-
-/**
- * Get Nav element
- */
-helpers.getNavEl = function() {
-    return document.querySelector('#mainNav ul');
-};
-
-
-/**
- * Toggle css class
- */
-helpers.toggleClass = function (element, cssClass) {
-    element.classList.toggle(cssClass);
-};
-
 
 /**
  * Create menu items
+ *
+ * @param contentObj
+ * @return Object menuItemEl
  */
-helpers.createMenuItem = function (contentObj) {
-    const menuItemEl = document.createElement('li');
-    menuItemEl.appendChild(helpers.createLink(contentObj));
-    return menuItemEl;
-};
+export function _createMenuItem (contentObj) {
+	const menuItemEl = document.createElement('li')
+	menuItemEl.appendChild(_createLink(contentObj))
+	return menuItemEl
+}
 
 
 /**
  * Create link item
+ *
+ * @param contentObj
+ * @return linkEl Object
  */
-helpers.createLink = function (contentObj) {
-    const linkEl = document.createElement('a');
-    const linkTitle = document.createTextNode(contentObj.title);
-    linkEl.appendChild(linkTitle);
+export function _createLink (contentObj) {
+	const linkEl = document.createElement('a')
+	const linkTitle = document.createTextNode(contentObj.title)
+	linkEl.appendChild(linkTitle)
 
-    linkEl.href = '#' === contentObj.slug ? '#' : '#' + contentObj.slug;
+	linkEl.href = '#' === contentObj.slug ? '#' : '#' + contentObj.slug
 
-    return linkEl;
+	return linkEl
 
-};
+}
+
+/**
+ * Toggle css class
+ *
+ * @param element
+ * @param cssClass
+ */
+export function _toggleClass (element, cssClass) {
+	element.classList.toggle(cssClass)
+}
 
 
-export default helpers
+
+/**
+ * Gets all links
+ * @return object all link elements
+ */
+export function _getLinks () {
+	return document.querySelectorAll( 'a' );
+}
+
+
+/**
+ * Get element by id
+ *
+ * @param element
+ * @return string
+ */
+export function _getElement (element) {
+	return document.querySelector(element)
+}
